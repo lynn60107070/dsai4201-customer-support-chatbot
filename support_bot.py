@@ -4,7 +4,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = Mistral(api_key=os.getenv("MISTRAL_API_KEY"))
+_api_key = os.getenv("MISTRAL_API_KEY")
+if not _api_key or not _api_key.strip():
+    raise RuntimeError(
+        "MISTRAL_API_KEY is not set. Create a .env file in the project root with:\n"
+        '  MISTRAL_API_KEY="your-key-here"\n'
+        "Get an API key at https://console.mistral.ai/"
+    )
+client = Mistral(api_key=_api_key.strip())
 
 def call_mistral(prompt, model="mistral-large-latest"):
     messages = [UserMessage(content=prompt)]

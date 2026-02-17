@@ -96,6 +96,66 @@ Available endpoints:
 - `POST /summarize` returns a summary of a conversation
 
 ---
+
+## Testing the API
+
+This section describes how the Customer Support Chatbot API was tested to ensure correct functionality.
+
+### 1. Start the API Server
+
+From the project root directory, run:
+
+```bash
+python api.py
+```
+The API should start successfully and run at:
+```bash
+http://127.0.0.1:5000
+```
+
+### 2. Test the `/chat` Endpoint (PowerShell)
+
+On Windows, the API was tested using Invoke-RestMethod in PowerShell.
+
+```bash
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/chat" `
+-Method POST `
+-Headers @{ "Content-Type" = "application/json" } `
+-Body '{"message":"When will my card arrive?"}'
+```
+
+Expected output:
+* The intent is correctly classified (e.g., card arrival)
+* A relevant customer support response is returned
+
+Additional test example:
+```bash
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/chat" `
+-Method POST `
+-Headers @{ "Content-Type" = "application/json" } `
+-Body '{"message":"I want to change my PIN"}'
+```
+### 3. Test the `/summarize` Endpoint
+
+The summarization endpoint was tested using the following command:
+```bash
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/summarize" `
+-Method POST `
+-Headers @{ "Content-Type" = "application/json" } `
+-Body '{"conversation":"User asked about card arrival. Agent explained delivery time."}'
+```
+Expected output:
+* A concise summary of the provided conversation
+
+### 4. Test Validation
+
+The API was verified to:
+- Run without errors
+- Correctly classify customer intents
+- Return clear and relevant responses
+- Handle different user inputs without crashing
+
+---
 ## Technologies Used
 * Python
 * Mistral AI
