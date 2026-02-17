@@ -1,0 +1,4 @@
+mistralai
+flask
+streamlit
+python-dotenv
